@@ -1,0 +1,89 @@
+[
+  {
+    "name": "Gold Bar",
+    "categories": [
+      "precious_metals",
+      "investment"
+    ],
+    "buying_date": "2026-01-15T10:30:00.000Z",
+    "selling_date": "2026-06-20T12:00:00.000Z",
+    "buying_price": 10000,
+    "selling_price": 15000,
+    "info": {
+      "weight": 100,
+      "unit": "gram",
+      "origin": {
+        "country": "Switzerland",
+        "company": "SwissGold"
+      }
+    }
+  },
+  {
+    "name": "Silver Coin Collection",
+    "categories": [
+      "precious_metals",
+      "collectibles"
+    ],
+    "buying_date": "2025-03-10T09:00:00.000Z",
+    "selling_date": "2026-02-01T15:45:00.000Z",
+    "buying_price": 5000,
+    "selling_price": 8000,
+    "info": {
+      "coins": 50,
+      "condition": "excellent",
+      "origin": {
+        "country": "Germany"
+      }
+    }
+  },
+  {
+    "name": "Tech Startup Shares",
+    "categories": [
+      "stocks",
+      "technology"
+    ],
+    "buying_date": "2026-05-01T08:00:00.000Z",
+    "buying_price": 20000,
+    "info": {
+      "company": {
+        "name": "FutureTech",
+        "employees": 120
+      },
+      "risk": "high"
+    }
+  },
+  {
+    "name": "Office Building",
+    "categories": [
+      "real_estate"
+    ],
+    "buying_date": "2024-11-20T14:30:00.000Z",
+    "selling_date": "2026-03-15T11:00:00.000Z",
+    "buying_price": 300000,
+    "selling_price": 450000,
+    "info": {
+      "location": {
+        "city": "Belgrade",
+        "country": "Serbia"
+      },
+      "area": 2500
+    }
+  },
+  {
+    "name": "Electric Vehicle",
+    "categories": [
+      "vehicles",
+      "technology"
+    ],
+    "buying_date": "2026-04-10T13:00:00.000Z",
+    "buying_price": 40000,
+    "info": {
+      "brand": "Tesla",
+      "model": "Model 3",
+      "battery": {
+        "capacity": 75,
+        "unit": "kWh"
+      }
+    }
+  }
+]

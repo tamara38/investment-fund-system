@@ -1,0 +1,53 @@
+
+python -m venv .venv
+. .venv\Scripts\Activate.ps1
+
+pip install -r authentication\requirements.txt 
+pip install -r employee\requirements.txt 
+pip install -r director\requirements.txt 
+
+#test pip install
+pip install -r requirements-pytest.txt
+pip install setuptools<81.0
+
+# povuce python image
+docker pull python:3.13  
+
+# jednom, sa internetom — build-uje sve tvoje image-e
+docker compose build   
+
+# povuče mysql, mongo, redis, adminer sa Hub-a  
+docker compose pull     
+
+docker compose build image  
+
+docker build -t imgage_name image_path
+
+#ucitavanje imagea iz tar fajla
+docker load -i putanja_do_tar_fajla
+
+#image u tar fajl
+docker save employee:latest -o employee.tar
+
+
+#pytest -q --type all --authentication-url http://127.0.0.1:5000 --jwt-secret JWT_SECRET_KEY --roles-field roles --employee-role employee --director-role director --with-authentication --employee-url http://127.0.0.1:5001 --director-url http://127.0.0.1:5002 --grade-report-file grade_report.json
+
+#Invoke-RestMethod -Uri "http://127.0.0.1:5002/endpoint" -Method Get
+
+docker system prune -a --volumes   #briše SVE lokalne image-e i volume-e, kao da si na praznoj mašini
+  
+#rebuild nakon izmena
+kubectl rollout restart deployment ime_deploymenta
+
+
+docker save employee:latest | docker exec -i desktop-control-plane ctr -n=k8s.io images import -
+docker save director:latest | docker exec -i desktop-control-plane ctr -n=k8s.io images import -
+docker save authentication:latest | docker exec -i desktop-control-plane ctr -n=k8s.io images import -
+docker save authenticationdbmigration:latest | docker exec -i desktop-control-plane ctr -n=k8s.io images import -
+
+kubectl exec -it mongo-deployment-86574f79bd-dcx87 -- mongosh -u root -p example --authenticationDatabase admin
+show dbs
+use investment_fond
+show collections
+db.assets.find()
+db.assets.find().pretty()

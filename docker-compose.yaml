@@ -1,0 +1,89 @@
+version: '3'
+
+services:
+  authenticationDB:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    depends_on:
+      - authenticationDB
+
+  authenticationDBMigration:
+    build: ./
+    image: authenticationdbmigration
+    environment:
+      - DATABASE_URL=authenticationDB
+    depends_on:
+      authenticationDB:
+        condition: service_healthy
+
+  authentication:
+    build: ./authentication
+    image: authentication
+    environment:
+      - DATABASE_URL=authenticationDB
+    depends_on:
+      - authenticationDBMigration
+    ports:
+      - 5000:5000
+
+  mongo:
+    image: mongo
+    environment:
+      MONGO_ROOT_USERNAME: root
+      MONGO_ROOT_PASSWORD: example
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis
+
+  employee:
+    build: ./employee
+    image: employee
+    environment:
+      MONGO_HOST: mongo
+      MONGO_PORT: 27017
+      MONGO_USERNAME: root
+      MONGO_PASSWORD: example
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_ORDER_LIST: orders
+    depends_on:
+      - mongo
+      - redis
+    ports:
+      - 5001:5000
+
+  director:
+    build: ./director
+    image: director
+    environment:
+      MONGO_HOST: mongo
+      MONGO_PORT: 27017
+      MONGO_USERNAME: root
+      MONGO_PASSWORD: example
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_ORDER_LIST: orders
+    depends_on:
+      - mongo
+      - redis
+    ports:
+      - 5002:5000
+
+volumes:
+  mysql_data:
+  mongo_data:
